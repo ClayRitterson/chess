@@ -73,9 +73,7 @@ class Game:
         if all(0 <= x <= 7 for x in system_move) == False:
             invalid_move = True
             msg = "NOT WITHIN BOARD PARAMETERS"
-        print("TEST")
-        print(Game.actual_board.board[system_move[1]][system_move[0]].system_value)
-        print(Game.current_player)
+
         if Game.actual_board.board[system_move[1]][system_move[0]].system_value * Game.current_player < 0:
             invalid_move = True
             msg = "CANNOT MOVE OPPONENTS PIECE"
