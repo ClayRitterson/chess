@@ -9,16 +9,16 @@ class Piece:
         self.system_value = 0
         self.display_value = ''
 
-    def set_values(self):
+    def setValues(self):
 
-        self.set_display_value()
-        self.set_system_value()
+        self.setDisplayValue()
+        self.setSystemValue()
 
-    def set_display_value(self):
+    def setDisplayValue(self):
 
         self.display_value = self.black_or_white + self.piece_type
 
-    def set_system_value(self):
+    def setSystemValue(self):
 
         self.system_value = pv.PieceValues().systemValueMap(self.piece_type)
 
