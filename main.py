@@ -1,3 +1,5 @@
+# Start program from here
+
 import Game as g
 
 current_game = g.Game()
