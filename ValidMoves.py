@@ -26,36 +26,10 @@ class ValidMoves:
 
         piece_to_move = self.game_board[self.system_move_data[1]][self.system_move_data[0]]
 
-        #print(piece_to_move.system_value, " --> ", piece_to_move.display_value)
-
         move_obj = ValidMoves.pieceMoveFactory[abs(piece_to_move.system_value)](self.system_move_data, self.current_player, self.game_board)
 
         valid_move_list = move_obj.findMoves()
 
         return valid_move_list
-
-        """
-        # Testing
-        # ----------------------------------------------
-        print("current_player: ", self.current_player)
-        print("system_move_data: ", self.system_move_data)
-   
-        print("game_board")
-        for i in range(len(self.game_board)):
-            game_row = ''
-            for k in range(len(self.game_board)):
-                game_row += f'|{str(i)}:{str(k)}'
-                '''
-                if self.game_board[i][k] == None:
-                    game_row += ' 0'
-                else:
-                    if self.game_board[i][k].system_value > 0:
-                        game_row += ' '
-                    game_row += str(self.game_board[i][k].system_value)
-               '''
-            print(game_row)
-        # ----------------------------------------------
-        """
-
 
 
