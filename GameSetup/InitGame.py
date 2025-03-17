@@ -1,4 +1,4 @@
-import GameBoard as gb
+import GameSetup.GameBoard as gb
 
          
 class InitGame:

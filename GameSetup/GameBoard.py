@@ -1,4 +1,4 @@
-import Piece as p
+import GameSetup.Piece as p
 
 
 class GameBoard:

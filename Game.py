@@ -1,8 +1,8 @@
-import InitGame as ig
-import BoardPrinter as bp
-import ValidMoves as vm
-import DisplayBoard as db
-import CheckForCheck as cfc 
+import GameSetup.InitGame as ig
+from Display import BoardPrinter as bp
+from Display import DisplayBoard as db
+from LegalMoves import ValidMoves as vm
+from CheckLogic import CheckForCheck as cfc 
 
 class Game:
 
@@ -92,7 +92,7 @@ class Game:
             invalid_move = True
             msg = "PLAYER IN CHECK"
             return invalid_move, msg
-            
+
         return invalid_move, msg
 
     def getMoveInput(self, player_color):

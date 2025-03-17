@@ -1,5 +1,5 @@
 
-import BoardPrinter as bp
+from Display import BoardPrinter as bp
 
 class DisplayBoard:
 
