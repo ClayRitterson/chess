@@ -1,6 +1,5 @@
 
 import copy
-import DisplayBoard as db
 import ValueLookup as vl
 
 class CheckForCheck:

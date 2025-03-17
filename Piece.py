@@ -1,4 +1,3 @@
-import PieceValues as pv
 import ValueLookup as vl
 
 
