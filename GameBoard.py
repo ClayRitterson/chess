@@ -7,6 +7,10 @@ class GameBoard:
 
     def __init__(self):
         self.board = []
+        self.king_locations = {
+        'w'  : [], # white, 1
+        'b'  : [] # black, -1
+    }
 
     def initializeBoard(self): # Creates and fills new board
 
@@ -29,6 +33,8 @@ class GameBoard:
             new_piece = p.Piece(bw, row_list[i])
             new_piece.setValues()
             self.board[row_index][i] = new_piece
+            if row_list[i] == 'K':
+                self.king_locations[bw] = [row_index, i]
 
     def fillPawns(self, bw): # Fills a row with pawns
 

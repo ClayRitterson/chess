@@ -31,5 +31,3 @@ class ValidMoves:
         valid_move_list = move_obj.findMoves()
 
         return valid_move_list
-
-

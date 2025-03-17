@@ -1,6 +1,8 @@
 import InitGame as ig
 import BoardPrinter as bp
 import ValidMoves as vm
+import DisplayBoard as db
+import CheckForCheck as cfc 
 
 class Game:
 
@@ -43,7 +45,8 @@ class Game:
             self.makeMove(Game.players[Game.current_player])
             
             Game.current_player = Game.current_player * -1
-            pass
+            
+            # until checkmate or quit
 
     def showBoard(self):
         
@@ -61,24 +64,35 @@ class Game:
             if Game.actual_board.board[check_sys_move[1]][check_sys_move[0]] == None:
                 invalid_move = True
                 msg = "EMPTY SPACE"
-                break
+                return invalid_move, msg
 
             if all(0 <= x <= 7 for x in check_sys_move) == False:
                 invalid_move = True
                 msg = "NOT WITHIN BOARD PARAMETERS"
-                break
+                return invalid_move, msg
 
             if Game.actual_board.board[check_sys_move[1]][check_sys_move[0]].system_value * Game.current_player < 0:
                 invalid_move = True
                 msg = "CANNOT MOVE OPPONENTS PIECE"
-                break
+                return invalid_move, msg
             check_input = False
 
         legal_moves = vm.ValidMoves(Game.actual_board.board, check_sys_move, Game.current_player).getValidMoves()
         if [check_sys_move[3],check_sys_move[2]] not in legal_moves:
             invalid_move = True
             msg = "ILLEGAL MOVE"
+            return invalid_move, msg
 
+        # IF CheckForCheck == True: (if Player in Check after move)
+        #   invalid_move = True
+        check_obj = cfc.CheckForCheck(Game.actual_board, check_sys_move, Game.players[Game.current_player])
+        check_obj.check_main()
+
+        if check_obj.check_bool == True:
+            invalid_move = True
+            msg = "PLAYER IN CHECK"
+            return invalid_move, msg
+            
         return invalid_move, msg
 
     def getMoveInput(self, player_color):
@@ -100,20 +114,12 @@ class Game:
         except:
             system_move = [-1,-1,-1,-1]
 
-
         return system_move
 
     
     def makeMove(self, player_color):
 
-
-        match player_color:
-            case 'b':
-                reverse_board_val = False
-            case 'w':
-                reverse_board_val = True
-
-        bp.BoardPrinter(Game.actual_board.board, reverse_board=reverse_board_val).printBoard()
+        db.DisplayBoard(Game.actual_board.board, player_color).display_main()
 
         valid_input=False
 
@@ -128,8 +134,16 @@ class Game:
             if invalid_move:
                 print(f'{Game.line_break}\nINVAID MOVE, {msg}\n{Game.line_break}\n')
             else:
+                
+                # If King moved, update King location
+                moved_piece = Game.actual_board.board[system_move[1]][system_move[0]]
+                if abs(moved_piece.system_value) == 6:
+                    Game.actual_board.king_locations[player_color] = [system_move[3], system_move[2]]
+
+                # Make actual move
                 Game.actual_board.board[system_move[3]][system_move[2]] = Game.actual_board.board[system_move[1]][system_move[0]]
                 Game.actual_board.board[system_move[1]][system_move[0]] = None
+
                 valid_input = True
 
 

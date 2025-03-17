@@ -1,4 +1,5 @@
 import PieceValues as pv
+import ValueLookup as vl
 
 
 class Piece:
@@ -20,7 +21,7 @@ class Piece:
 
     def setSystemValue(self):
 
-        self.system_value = pv.PieceValues().systemValueMap(self.piece_type)
+        self.system_value = vl.ValueLookup().systemPieceValueMap(self.piece_type)
 
         if self.black_or_white == 'b':
             self.system_value = self.system_value * -1
