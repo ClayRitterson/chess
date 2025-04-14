@@ -33,9 +33,6 @@ class PawnMoves:
         # ------------------------------------------
         # en passant
 
-        # pawn promotion? where to handle this event?
-        # ------------------------------------------
-
         return self.valid_move_index_list
 
     def checkDiagCaptures(self, current_position, lateral_direction):
@@ -48,10 +45,16 @@ class PawnMoves:
 
             check_square = self.game_board[current_position[0]][current_position[1]]
 
-            # is square occupied by opposing player's piece?
+            # is square occupied by opposing player's piece or en_passant is valid?
             if check_square != None:
                 if check_square.system_value * self.current_player < 0: 
                     self.valid_move_index_list.append(current_position[:])
+            if 0 <= current_position[0] + (self.current_player * -1) <= 7:
+                en_passant_squre = self.game_board[current_position[0] + (self.current_player * -1)][current_position[1]]
+                if en_passant_squre != None:
+                    if en_passant_squre.system_value * self.current_player < 0 and en_passant_squre.en_passant == True:
+                            self.valid_move_index_list.append(current_position[:])
+
 
 
     def checkForward(self, current_position, mult):

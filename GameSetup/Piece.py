@@ -8,6 +8,8 @@ class Piece:
         self.piece_type = piece_type
         self.system_value = 0
         self.display_value = ''
+        self.has_moved = False
+        self.en_passant = False
 
     def setValues(self):
 
