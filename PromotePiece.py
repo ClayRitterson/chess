@@ -2,21 +2,23 @@ import ValueLookup as vl
 
 class PromotePiece:
 
-    line_break = vl.ValueLookup().line_break
+    soft_break = vl.ValueLookup().soft_break
     player_names = vl.ValueLookup().player_names
 
+    # ------------------------------------------------------------------------
     def __init__(self) -> None:
         pass
 
+    # ------------------------------------------------------------------------
     def main(self, player_color):
 
-        print(f"{PromotePiece.line_break}\nPROMOTION CHOICES:\nQUEEN\nKNIGHT\nBISHOP\nROOK\n{PromotePiece.line_break}")
+        print(f"{PromotePiece.soft_break}\nPROMOTION CHOICES:\nQUEEN\nKNIGHT\nBISHOP\nROOK\n{PromotePiece.soft_break}")
 
         letter_val = ''
         valid_input = False
         while valid_input == False:
-            input_move = input(f'{PromotePiece.line_break}\nPLAYER {PromotePiece.player_names[player_color]}, PROMOTE PAWN TO: ')
-            print(PromotePiece.line_break)
+            input_move = input(f'{PromotePiece.soft_break}\nPLAYER {PromotePiece.player_names[player_color]}, PROMOTE PAWN TO: ')
+            print(PromotePiece.soft_break)
             match input_move.lower():
                 case 'queen':
                     letter_val = 'Q'

@@ -8,7 +8,6 @@ class CheckRBQ:
         'Q':[[1, 0],[-1, 0],[0, -1],[0, 1],[1, 1],[-1, -1],[1, -1],[-1, 1]]
     }
 
-
     # check wrapper
     # --------------------------------------------------------------------
     def check_RBQ_wrapper(self):
@@ -31,6 +30,7 @@ class CheckRBQ:
             if self.check_bool == True:
                 return
 
+    # ------------------------------------------------------------------------
     def check_current_RBQ_line(self, current_line_direction, line_type):
 
         rbq_lookup_value = vl.ValueLookup().systemPieceValueMap(line_type)
@@ -51,7 +51,7 @@ class CheckRBQ:
             if keep_checking == False:
                 continue_path = False
         
-
+    # ------------------------------------------------------------------------
     def checkCurrentSquare(self, current_position, rbq_lookup_value):
 
             keep_checking = False

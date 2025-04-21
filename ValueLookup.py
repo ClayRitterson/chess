@@ -1,6 +1,8 @@
 class ValueLookup:
 
     line_break = '*' * 35
+    soft_break = '-' * 35
+    game_break = '#' * 35
 
     players = {
         -1 : 'b',

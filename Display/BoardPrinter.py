@@ -1,5 +1,6 @@
 class BoardPrinter:
 
+    # ------------------------------------------------------------------------
     def __init__(self, board_to_print, reverse_board = True,  display_or_system='display'):
         self.board_to_print = board_to_print
         self.reverse_board = reverse_board
@@ -7,12 +8,14 @@ class BoardPrinter:
         self.row_numbers = [1,2,3,4,5,6,7,8]
         self.print_cols = ''
 
+    # ------------------------------------------------------------------------
     def flipBoardHorizontal(self, board_to_flip):
         flipped_board = []
         for y in range(len(board_to_flip)):
             flipped_board.append(board_to_flip[y][::-1])
         return flipped_board
 
+    # ------------------------------------------------------------------------
     def boardSetup(self):
 
         space = '    '
@@ -31,6 +34,7 @@ class BoardPrinter:
         
         return print_board
 
+    # ------------------------------------------------------------------------
     def printBoard(self): # Prints the board state in human readable format
     
         print_board = self.boardSetup()

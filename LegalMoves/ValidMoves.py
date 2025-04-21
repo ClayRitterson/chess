@@ -16,12 +16,13 @@ class ValidMoves:
         6: lkm.KingMoves
     }
 
+    # ------------------------------------------------------------------------
     def __init__(self, game_board, system_move_data, current_player) -> None:
         self.game_board = game_board
         self.system_move_data = system_move_data
         self.current_player = current_player
 
-
+    # ------------------------------------------------------------------------
     def getValidMoves(self):
 
         piece_to_move = self.game_board[self.system_move_data[1]][self.system_move_data[0]]

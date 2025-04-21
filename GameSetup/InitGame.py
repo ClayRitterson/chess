@@ -3,6 +3,7 @@ import GameSetup.GameBoard as gb
          
 class InitGame:
 
+    # ------------------------------------------------------------------------
     def gameSetup(self):
 
         game_board = gb.GameBoard()

@@ -2,12 +2,10 @@ import ValueLookup as vl
 
 class CheckKN:
 
-
     system_move_piece_index_KN = {
         'K' : [[1,0],[1,1],[0,1],[-1,1],[-1,0],[-1,-1],[0,-1],[1,-1]],
         'N' : [[2, 1],[2, -1],[-2,1],[-2,-1],[1,2],[-1,2],[1,-2],[-1,-2]]
     }
-
 
     # check wrapper
     # --------------------------------------------------------------------
@@ -30,6 +28,7 @@ class CheckKN:
         for i in range(len(kn_move_list)):
             self.checkStaticMoveKN(self.current_player_king_location[:], kn_move_list[i], lookup_value)
 
+    # ------------------------------------------------------------------------
     def checkStaticMoveKN(self, current_position, move_values, lookup_value):
         
         current_position[0] += move_values[0]

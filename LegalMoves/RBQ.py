@@ -6,6 +6,7 @@ class RBQ:
         'Q':[[1, 0],[-1, 0],[0, -1],[0, 1],[1, 1],[-1, -1],[1, -1],[-1, 1]]
     }
 
+    # ------------------------------------------------------------------------
     def __init__(self, system_move_data, current_player, game_board) -> None:
         self.system_move_data = system_move_data
         self.current_player = current_player
@@ -13,10 +14,12 @@ class RBQ:
         self.system_directions = RBQ.system_move_piece_index[self.get_rbq_value()]
         self.valid_move_index_list = []
 
+    # ------------------------------------------------------------------------
     def get_rbq_value(self):
 
         return None
 
+    # ------------------------------------------------------------------------
     def checkCurrentSquare(self, current_position):
 
         keep_checking = False
@@ -37,6 +40,7 @@ class RBQ:
 
         return keep_checking
 
+    # ------------------------------------------------------------------------
     def checkDirection(self, path_index):
 
         continue_path = True
@@ -51,7 +55,8 @@ class RBQ:
 
             if keep_checking == False:
                 continue_path = False
-        
+
+    # ------------------------------------------------------------------------ 
     def findRBQmoves(self):
         
         for i in range(len(self.system_directions)):

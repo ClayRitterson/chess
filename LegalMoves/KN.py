@@ -12,10 +12,12 @@ class KN:
         self.system_moves_static = KN.system_move_piece_index[self.get_kn_value()]
         self.valid_move_index_list = []
 
+    # ------------------------------------------------------------------------
     def get_kn_value(self):
 
         return 
-        
+
+    # ------------------------------------------------------------------------
     def findKNmoves(self):
 
         start_position = [self.system_move_data[1], self.system_move_data[0]]
@@ -25,6 +27,7 @@ class KN:
 
         return self.valid_move_index_list
 
+    # ------------------------------------------------------------------------
     def checkStaticMove(self, current_position, move_values):
         
         current_position[0] += move_values[0]

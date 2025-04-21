@@ -3,10 +3,12 @@ from Display import BoardPrinter as bp
 
 class DisplayBoard:
 
+    # ------------------------------------------------------------------------
     def __init__(self, display_board, player_color) -> None:
         self.display_board = display_board
         self.player_color = player_color
 
+    # ------------------------------------------------------------------------
     def display_main(self):
 
         match self.player_color:

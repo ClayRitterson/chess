@@ -20,6 +20,7 @@ class CheckCastle:
     piece_val_map = vl.ValueLookup().piece_val_map
     players = vl.ValueLookup().players
 
+    # ------------------------------------------------------------------------
     def __init__(self, castle_move, player_color, game_board) -> None:
         self.castle_move = castle_move
         self.player_color = player_color
@@ -29,6 +30,7 @@ class CheckCastle:
         self.direction = 0
         self.distance = 0
 
+    # ------------------------------------------------------------------------
     def main(self):
 
         valid_castle = True
@@ -65,6 +67,7 @@ class CheckCastle:
 
         return valid_castle
 
+    # ------------------------------------------------------------------------
     def perform_castle(self):
 
         move_king_to_file = self.king_pos[1] + (self.direction * 2)
@@ -77,7 +80,7 @@ class CheckCastle:
         self.game_board.board[self.rook_pos[0]][move_rook_to_file] = self.game_board.board[self.rook_pos[0]][self.rook_pos[1]]
         self.game_board.board[self.rook_pos[0]][self.rook_pos[1]] = None
 
-
+    # ------------------------------------------------------------------------
     def check_lane(self, valid_castle):
 
         return_squares = []
@@ -89,7 +92,8 @@ class CheckCastle:
                 valid_castle = False
         
         return valid_castle, return_squares
-            
+
+    # ------------------------------------------------------------------------       
     def check_has_moved(self, pos, check_system_val, valid_castle):
         if self.game_board.board[pos[0]][pos[1]] != None:
             potential_castle_piece = self.game_board.board[pos[0]][pos[1]]

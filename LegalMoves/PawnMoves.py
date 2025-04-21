@@ -6,13 +6,14 @@ class PawnMoves:
         -1 : 6 # black pawns start on row index 6
     }
 
+    # ------------------------------------------------------------------------
     def __init__(self, system_move_data, current_player, game_board) -> None:
         self.system_move_data = system_move_data
         self.current_player = current_player
         self.game_board = game_board
         self.valid_move_index_list = []
 
-
+    # ------------------------------------------------------------------------
     def findMoves(self):
 
         start_position = [self.system_move_data[1], self.system_move_data[0]]
@@ -35,6 +36,7 @@ class PawnMoves:
 
         return self.valid_move_index_list
 
+    # ------------------------------------------------------------------------
     def checkDiagCaptures(self, current_position, lateral_direction):
 
         current_position[0] += self.current_player # One row "forward" depending on b/w 
@@ -55,8 +57,7 @@ class PawnMoves:
                     if en_passant_squre.system_value * self.current_player < 0 and en_passant_squre.en_passant == True:
                             self.valid_move_index_list.append(current_position[:])
 
-
-
+    # ------------------------------------------------------------------------
     def checkForward(self, current_position, mult):
 
         current_position[0] += (self.current_player * mult) # One row "forward" depending on b/w 
