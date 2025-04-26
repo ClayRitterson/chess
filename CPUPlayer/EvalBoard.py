@@ -1,4 +1,5 @@
 
+from Display import DisplayBoard as db
 """
 ------------------------------------------------------------------------------------------------------------
 ## IDEAS
@@ -115,7 +116,7 @@ class Evalboard:
     def apply_scores(self, scores, opp=False):
         
         if opp == True:
-            opp_adj = self.opponent_adjustment
+            opp_adj = 1
             score_direction = -1
         else:
             opp_adj = 1
@@ -154,6 +155,7 @@ class Evalboard:
             piece_location = piece_map[piece_ids[i]]
             piece_from_loc = self.board_obj[piece_location[0]][piece_location[1]]
             system_value = piece_from_loc.system_value
+            
             
             # Piece values based on piece type
             eval_value_score += (Evalboard.piece_score_value_map[abs(system_value)])

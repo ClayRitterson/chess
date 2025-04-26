@@ -1,5 +1,7 @@
 class ValueLookup:
 
+    DEPTH = 3
+
     line_break = '*' * 35
     soft_break = '-' * 35
     game_break = '#' * 35

@@ -5,7 +5,12 @@ from CheckLogic import CheckForCheckmate as cfcm
 import PlayerInput as pi
 import PromotePiece as pp
 import ValueLookup as vl
-import EvalBoard as eb
+import CPUPlayer.EvalBoard as eb
+import time
+from CPUPlayer import CPUMover as cpum
+
+DEPTH = vl.ValueLookup().DEPTH
+
 
 class Game:
 
@@ -25,6 +30,10 @@ class Game:
         -1 : None
     }
 
+    def __init__(self, gs_obj) -> None:
+        self.player_white = gs_obj.player_white
+        self.player_black = gs_obj.player_black
+
     # ------------------------------------------------------------------------
     def runGame(self):
 
@@ -35,10 +44,18 @@ class Game:
 
         Game.actual_board = ig.InitGame().gameSetup()
 
+        game_control = self.player_white
+
         Game.current_player = 1
         while Game.continue_game:
+            if Game.current_player == 1:
+                game_control = self.player_white
+            elif Game.current_player == -1:
+                game_control = self.player_black
+            else:
+                return
 
-            return_game_status = self.makeMove(Game.players[Game.current_player])
+            return_game_status = self.makeMove(Game.players[Game.current_player], game_control)
             if return_game_status == False:
                 Game.continue_game = False
 
@@ -105,13 +122,21 @@ class Game:
             moved_piece.has_moved = True
 
     # ------------------------------------------------------------------------
-    def makeMove(self, player_color):
+    def makeMove(self, player_color, game_control):
 
-        print(f'\n{Game.line_break}\nCURRENT TURN: {Game.player_names[Game.players[Game.current_player]]}')
+        full_player_name = Game.player_names[Game.players[Game.current_player]]
+        match full_player_name:
+            case "WHITE":
+                player_type = self.player_white
+            case "BLACK":
+                player_type = self.player_black
+        print(f'\n{Game.line_break}\n=>CURRENT TURN : {full_player_name}\n=>PLAYER TYPE  : {player_type.upper()}')
 
         # Board Strength Evaluation for current player
-        board_score = eb.Evalboard(Game.actual_board, Game.bw_val_map[player_color], player_color).main()
-        print("BOARD SCORE = ", board_score)
+        board_score_white = eb.Evalboard(Game.actual_board, Game.bw_val_map['w'], 'w').main()
+        board_score_black = eb.Evalboard(Game.actual_board, Game.bw_val_map['b'], 'b').main()
+        #print(f"BOARD SCORE WHITE : {board_score_white}")
+        #print(f"BOARD SCORE BLACK : {board_score_black}")
 
         db.DisplayBoard(Game.actual_board.board, player_color).display_main()
 
@@ -123,23 +148,48 @@ class Game:
         # Reset Player En Passant Status
         self.reset_passant(player_color)
 
-        valid_input=False
 
-        # Loop until valid move provided. Perform Move within
-        while valid_input==False:
-            
-            # Get player move data
-            invalid_move, msg, castle_status, system_move = pi.PlayerInput(Game.actual_board, Game.current_player).get_player_move(player_color)
-            
-            if invalid_move:
-                print(f'{Game.soft_break}\nINVALID MOVE, {msg}\n{Game.soft_break}\n')
-            elif castle_status == False:
-                self.performMove(player_color, system_move)
-                valid_input = True
-            elif castle_status == True:
-                valid_input = True
+        if game_control == 'human':
+            self.makeHumanMove(player_color)
+        elif game_control == 'cpu':
+            self.makeCPUMove(player_color)
+        else:
+            return False
         
         return True
+
+    # ------------------------------------------------------------------------
+    def makeHumanMove(self, player_color):
+
+            valid_input=False
+
+            # Loop until valid move provided. Perform Move within
+            while valid_input==False:
+                
+                # Get player move data
+                invalid_move, msg, castle_status, system_move = pi.PlayerInput(Game.actual_board, 
+                                                                        Game.current_player).get_player_move(player_color)
+                
+                if invalid_move:
+                    print(f'{Game.soft_break}\nINVALID MOVE, {msg}\n{Game.soft_break}\n')
+                elif castle_status == False:
+                    self.performMove(player_color, system_move)
+                    valid_input = True
+                elif castle_status == True:
+                    valid_input = True
+
+    # ------------------------------------------------------------------------
+    def makeCPUMove(self, player_color):
+
+        start_time = time.time()
+        move_node = cpum.CPUMover(player_color, Game.actual_board).main()
+        self.performMove(player_color, move_node.move_spec)
+        elapsed_time = time.time() - start_time
+        #print(f"\nMOVE CALCULATION TIME: {round(elapsed_time, 2)} SECONDS\nRUNNING AT SEARCH DEPTH: {DEPTH}")
+
+        return
+
+
 
 
 
