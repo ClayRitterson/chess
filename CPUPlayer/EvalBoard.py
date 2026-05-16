@@ -133,7 +133,7 @@ class Evalboard:
         #eval_development_score
         self.development_score += score_direction * (scores[4] * opp_adj * self.development_adjustment)
         #eval_pawn_structure_score
-        self.pawn_structure_score += score_direction * (scores[4] * opp_adj * self.pawn_structure_adjustment)
+        self.pawn_structure_score += score_direction * (scores[5] * opp_adj * self.pawn_structure_adjustment)
 
     # ------------------------------------------------------------------------
     def eval(self, piece_map, multiplier):

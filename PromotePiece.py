@@ -6,11 +6,15 @@ class PromotePiece:
     player_names = vl.ValueLookup().player_names
 
     # ------------------------------------------------------------------------
-    def __init__(self) -> None:
+    def __init__(self, cpu=False) -> None:
+        self.cpu = cpu
         pass
 
     # ------------------------------------------------------------------------
     def main(self, player_color):
+
+        if self.cpu == True:
+            return 'Q'
 
         print(f"{PromotePiece.soft_break}\nPROMOTION CHOICES:\nQUEEN\nKNIGHT\nBISHOP\nROOK\n{PromotePiece.soft_break}")
 

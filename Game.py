@@ -135,8 +135,8 @@ class Game:
         # Board Strength Evaluation for current player
         board_score_white = eb.Evalboard(Game.actual_board, Game.bw_val_map['w'], 'w').main()
         board_score_black = eb.Evalboard(Game.actual_board, Game.bw_val_map['b'], 'b').main()
-        #print(f"BOARD SCORE WHITE : {board_score_white}")
-        #print(f"BOARD SCORE BLACK : {board_score_black}")
+        print(f"BOARD SCORE WHITE : {board_score_white}")
+        print(f"BOARD SCORE BLACK : {board_score_black}")
 
         db.DisplayBoard(Game.actual_board.board, player_color).display_main()
 

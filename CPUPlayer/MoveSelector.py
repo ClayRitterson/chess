@@ -26,15 +26,15 @@ def get_cpu_move(best_color, best_board):
             next_best_color = 'b'
         elif best_color == 'b':
             next_best_color = 'w'
-        eval = minimax(0, deep_fb_board, next_best_color, alpha=-math.inf, beta=math.inf, maximize=False )
+        eval = minimax(0, deep_fb_board, next_best_color, alpha=-math.inf, beta=math.inf, maximize=False , cpu_color=best_color)
         if eval > max_eval:
             max_eval = eval
             best_move = move
-
     return best_move
 
 # ------------------------------------------------------------------------
-def minimax(depth, sim_board, player_color, alpha, beta, maximize):
+def minimax(depth, sim_board, player_color, alpha, beta, maximize, cpu_color):
+
     #print('player_color=',player_color, 'maximize=',maximize, 'depth=',depth)
     #time.sleep(1)
 
@@ -47,7 +47,10 @@ def minimax(depth, sim_board, player_color, alpha, beta, maximize):
             return math.inf
     '''
     if depth == DEPTH: 
-        board_score = eb.Evalboard(sim_board, bw_val_map[player_color], player_color).main()
+        
+        cpu_player = bw_val_map[cpu_color]
+        #print("CPU COLOR = ", cpu_color)
+        board_score = eb.Evalboard(sim_board, cpu_player, cpu_color).main()
         return board_score
 
     ## if len of traverse_moves == 0 , more efficient way to determine checkmate?? #TODO
@@ -62,14 +65,16 @@ def minimax(depth, sim_board, player_color, alpha, beta, maximize):
     if maximize == True:
         max_eval = -math.inf
         for cur_move in traverse_moves:
+
             deep_board = deepcopy(sim_board)
             sim_obj = sm.SimulateMove(deep_board, player_color, cur_move.move_spec)
             next_board = sim_obj.performSimulatedMove()
+
             if player_color == 'w':
                 next_player_color = 'b'
             elif player_color == 'b':
                 next_player_color = 'w'
-            eval = minimax(depth + 1, next_board, next_player_color, alpha, beta, maximize = False)
+            eval = minimax(depth + 1, next_board, next_player_color, alpha, beta, maximize = False, cpu_color=cpu_color)
             max_eval = max(max_eval, eval)
             alpha = max(alpha, eval)
             if beta <= alpha:
@@ -78,14 +83,16 @@ def minimax(depth, sim_board, player_color, alpha, beta, maximize):
     elif maximize == False:
         min_eval = math.inf
         for cur_move in traverse_moves:
+
             deep_board = deepcopy(sim_board)
             sim_obj = sm.SimulateMove(deep_board, player_color, cur_move.move_spec)
             next_board = sim_obj.performSimulatedMove()
+
             if player_color == 'w':
                 next_player_color = 'b'
             elif player_color == 'b':
                 next_player_color = 'w'
-            eval = minimax(depth + 1, next_board, next_player_color, alpha, beta, maximize = True)
+            eval = minimax(depth + 1, next_board, next_player_color, alpha, beta, maximize = True, cpu_color=cpu_color)
             min_eval = min(min_eval, eval)
             beta = min(beta, eval)
             if beta <= alpha:

@@ -1,6 +1,6 @@
 class ValueLookup:
 
-    DEPTH = 3
+    DEPTH = 2
 
     line_break = '*' * 35
     soft_break = '-' * 35
