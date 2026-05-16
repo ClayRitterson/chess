@@ -78,6 +78,24 @@ class Game:
                 un_passant_piece.en_passant = False
 
     # ------------------------------------------------------------------------
+    def perform_castle(self, player_color, castle_data):
+
+        castle_king_pos = castle_data[0]
+        castle_rook_pos = castle_data[1]
+        castle_direction = castle_data[2]
+        castle_distance = castle_data[3]
+
+        move_king_to_file = castle_king_pos[1] + (castle_direction * 2)
+        Game.actual_board.king_locations[player_color] = [castle_king_pos[0], move_king_to_file]
+        Game.actual_board.board[castle_king_pos[0]][move_king_to_file] = Game.actual_board.board[castle_king_pos[0]][castle_king_pos[1]]
+        Game.actual_board.board[castle_king_pos[0]][castle_king_pos[1]] = None
+        move_rook_to_file = castle_rook_pos[1] + (castle_direction * castle_distance * -1)
+        moved_piece = Game.actual_board.board[castle_rook_pos[0]][castle_rook_pos[1]]
+        Game.actual_board.piece_locations[player_color][moved_piece.piece_id] = [castle_rook_pos[0], move_rook_to_file]
+        Game.actual_board.board[castle_rook_pos[0]][move_rook_to_file] = Game.actual_board.board[castle_rook_pos[0]][castle_rook_pos[1]]
+        Game.actual_board.board[castle_rook_pos[0]][castle_rook_pos[1]] = None
+
+    # ------------------------------------------------------------------------
     def performMove(self, player_color, system_move):
 
         # If non-King piece moved, update piece location
@@ -107,6 +125,8 @@ class Game:
                 captured_piece_id = captured_piece.piece_id
                 Game.actual_board.piece_locations[Game.players[Game.current_player * -1]].pop(captured_piece_id)
                 Game.actual_board.board[system_move[1]][system_move[2]] = None
+                print('en passant check')
+                db.DisplayBoard(Game.actual_board.board, player_color).display_main()
                 
         # Make actual move
         check_for_capture = Game.actual_board.board[system_move[3]][system_move[2]]
@@ -167,7 +187,7 @@ class Game:
             while valid_input==False:
                 
                 # Get player move data
-                invalid_move, msg, castle_status, system_move = pi.PlayerInput(Game.actual_board, 
+                invalid_move, msg, system_move, castle_status, castle_data  = pi.PlayerInput(Game.actual_board, 
                                                                         Game.current_player).get_player_move(player_color)
                 
                 if invalid_move:
@@ -176,6 +196,8 @@ class Game:
                     self.performMove(player_color, system_move)
                     valid_input = True
                 elif castle_status == True:
+                    self.perform_castle(player_color, castle_data)
+                    #self.performMoveCastle(player_color, castle_direction)
                     valid_input = True
 
     # ------------------------------------------------------------------------

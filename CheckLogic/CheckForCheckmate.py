@@ -29,8 +29,12 @@ class CheckForCheckmate:
             # if player in checkmate
             if check_mate_obj == True:
                 winning_player = CheckForCheckmate.player_names[CheckForCheckmate.players[self.cm_player*-1]]
-                print(f"""\n\n{CheckForCheckmate.game_break}\nCHECKMATE! PLAYER {winning_player} WINS!
-                            GAME OVER...\n{CheckForCheckmate.game_break}\n""")
+                print(
+                    f"\n\n{CheckForCheckmate.game_break}\n"
+                    f"CHECKMATE! PLAYER {winning_player} WINS!\n"
+                    f"GAME OVER...\n"
+                    f"{CheckForCheckmate.game_break}\n"
+                )
                 cfcm_status =  True
         
         return cfcm_status

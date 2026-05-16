@@ -1,6 +1,7 @@
 import ValueLookup as vl
 from CheckLogic import CheckForCheck as cfc
 from Display import DisplayBoard as db
+import Game
 
 
 class CheckCastle:
@@ -62,23 +63,7 @@ class CheckCastle:
             if check_obj.check_bool == True:
                 valid_castle = False
         
-        if valid_castle == True:
-            self.perform_castle()
-
-        return valid_castle
-
-    # ------------------------------------------------------------------------
-    def perform_castle(self):
-
-        move_king_to_file = self.king_pos[1] + (self.direction * 2)
-
-        self.game_board.board[self.king_pos[0]][move_king_to_file] = self.game_board.board[self.king_pos[0]][self.king_pos[1]]
-        self.game_board.board[self.king_pos[0]][self.king_pos[1]] = None
-
-        move_rook_to_file = self.rook_pos[1] + (self.direction * self.distance * -1)
-
-        self.game_board.board[self.rook_pos[0]][move_rook_to_file] = self.game_board.board[self.rook_pos[0]][self.rook_pos[1]]
-        self.game_board.board[self.rook_pos[0]][self.rook_pos[1]] = None
+        return valid_castle, self.king_pos, self.rook_pos, self.direction, self.distance
 
     # ------------------------------------------------------------------------
     def check_lane(self, valid_castle):

@@ -24,7 +24,7 @@ class PlayerInput:
         
         if all(0 <= x <= 7 for x in check_sys_move) == False:
             invalid_move = True
-            msg = "NOT WITHIN BOARD PARAMETERS"
+            msg = "NOT WITHIN BOARD BOUNDRY"
             return invalid_move, msg
 
         if self.pi_board.board[check_sys_move[1]][check_sys_move[0]] == None:
@@ -87,10 +87,12 @@ class PlayerInput:
         user_move = self.getMoveInput(player_color)
 
         castle_status = False
+        castle_data = []
         if user_move.upper() == 'CASTLE LEFT' or user_move.upper() == 'CASTLE RIGHT':
-            castle_status = cc.CheckCastle(user_move.upper(), player_color, self.pi_board).main()
+            castle_status, castle_king_pos, castle_rook_pos, castle_direction, castle_distance = cc.CheckCastle(user_move.upper(), player_color, self.pi_board).main()
             if castle_status == True:
                 invalid_move = False
+                castle_data = [castle_king_pos, castle_rook_pos, castle_direction, castle_distance]
             else:
                 invalid_move = True
                 msg = 'INVALID CASTLE'
@@ -99,4 +101,4 @@ class PlayerInput:
             system_move = self.evalMoveInput(user_move)
             invalid_move, msg = self.checkInput(system_move) 
 
-        return invalid_move, msg, castle_status, system_move
+        return invalid_move, msg, system_move, castle_status, castle_data

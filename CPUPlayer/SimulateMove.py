@@ -58,7 +58,35 @@ class SimulateMove:
         if check_for_capture != None:
             captured_piece = self.p_sim_board.board[self.system_move[3]][self.system_move[2]]
             captured_piece_id = captured_piece.piece_id
-            self.p_sim_board.piece_locations[SimulateMove.players[SimulateMove.bw_val_map[self.player_color] * -1]].pop(captured_piece_id)
+            #self.p_sim_board.piece_locations[SimulateMove.players[SimulateMove.bw_val_map[self.player_color] * -1]].pop(captured_piece_id)
+            # --- Debug Logging: Break down the lookup keys ---
+            try:
+                # 1. Check the player color mapping
+                bw_val = SimulateMove.bw_val_map[self.player_color]
+                opponent_val = bw_val * -1
+                opponent_color = SimulateMove.players[opponent_val]
+                
+                print(f"[DEBUG] Self Color: {self.player_color} (val: {bw_val})")
+                print(f"[DEBUG] Target Opponent Color Key: {opponent_color} (val: {opponent_val})")
+                print(f"[DEBUG] Attempting to pop captured_piece_id: {captured_piece_id}")
+                
+                # 2. Check if the opponent color actually exists in piece_locations
+                if opponent_color in self.p_sim_board.piece_locations:
+                    available_ids = list(self.p_sim_board.piece_locations[opponent_color].keys())
+                    print(f"[DEBUG] Available piece IDs for {opponent_color}: {available_ids}")
+                else:
+                    print(f"[DEBUG] CRITICAL: '{opponent_color}' not found in piece_locations!")
+
+                # Original operation
+                self.p_sim_board.piece_locations[opponent_color].pop(captured_piece_id)
+                print(f"[DEBUG] Successfully popped {captured_piece_id}")
+
+            except Exception as e:
+                import traceback
+                print(f"[ERROR] Failed to pop piece inside simulation loop!")
+                print(f"[ERROR] Exception type: {type(e).__name__} - {e}")
+                print("[ERROR] Traceback:")
+                traceback.print_exc()
         self.p_sim_board.board[self.system_move[3]][self.system_move[2]] = self.p_sim_board.board[self.system_move[1]][self.system_move[0]]
         self.p_sim_board.board[self.system_move[1]][self.system_move[0]] = None
 
