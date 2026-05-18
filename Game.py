@@ -168,7 +168,6 @@ class Game:
         # Reset Player En Passant Status
         self.reset_passant(player_color)
 
-
         if game_control == 'human':
             self.makeHumanMove(player_color)
         elif game_control == 'cpu':

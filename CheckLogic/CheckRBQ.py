@@ -66,7 +66,6 @@ class CheckRBQ:
                 else: 
                     keep_checking = False
                     # is square occupied by opposing player's piece that is either Q or [R/B]?
-
                     if check_square.system_value * self.system_player < 0 and abs(check_square.system_value) in [self.queen_value, rbq_lookup_value]:
                         self.check_bool = True
                         return
